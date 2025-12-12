@@ -1,0 +1,11 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../project_1.srcs/sources_1/new/Counter_2b.vhd" \
+"../../../../project_1.srcs/sources_1/new/Transcodeur_anodes.vhd" \
+"../../../../project_1.srcs/sources_1/new/Mux_4x1x4b.vhd" \
+"../../../../project_1.srcs/sources_1/new/Transcodeur_7seg.vhd" \
+"../../../../project_1.srcs/sources_1/new/Affichage.vhd" \
+"../../../../project_1.srcs/sim_1/new/Affichage_tb.vhd" \
+
+# Do not sort compile order
+nosort
