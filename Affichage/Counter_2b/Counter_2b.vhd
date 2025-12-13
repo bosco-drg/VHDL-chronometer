@@ -1,11 +1,11 @@
-library ieee;
+﻿library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity Counter_2b is
     port (
         CLK   : in  std_logic;
-        RESET : in  std_logic;             -- actif à 1
+        RESET : in  std_logic;
         OUTPUT     : out std_logic_vector(1 downto 0)
     );
 end entity Counter_2b;
@@ -26,3 +26,4 @@ begin
     OUTPUT <= std_logic_vector(cnt);
 
 end architecture rtl;
+

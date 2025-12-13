@@ -1,16 +1,4 @@
-----------------------------------------------------------------------------------
--- Company: INSA Lyon
--- Engineer: Titouan BOCQUET
--- 
--- Create Date: 12.11.2025 17:22:32
--- Module Name: tb_dizaine_sec - Behavioral
--- Target Devices: Artix 7 
--- Description: tb du compteur des dizièmes de secondes
--- 
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
+﻿
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -29,7 +17,6 @@ architecture Behavioral of tb_counteurdixieme is
             TC_ds  : out STD_LOGIC
         );
     end component;
-           
     signal ARESET_int : std_logic := '1';
     signal CE_int     : std_logic := '0';
     signal TC_ds_int  : std_logic := '0';
@@ -38,7 +25,6 @@ architecture Behavioral of tb_counteurdixieme is
 
 begin
 
-    -- Instanciation du compteur
     uut : counteurdixieme
         port map (
             ARESET => ARESET_int,
@@ -48,7 +34,6 @@ begin
             TC_ds  => TC_ds_int
         );
 
-    -- Process de génération d'horloge
     clk_gen : process
     begin
         while true loop
@@ -59,10 +44,8 @@ begin
         end loop;
     end process;
 
-    -- Process de stimulation
     stim_proc : process
     begin
-        -- Reset actif pendant 100 ns
         ARESET_int <= '1';
         CE_int <= '0';
         wait for 70 ns;
@@ -70,15 +53,14 @@ begin
         ARESET_int <= '0';
         wait for 70 ns;
 
-        -- Activation du comptage
         CE_int <= '1';
-        wait for 1400 ns; -- durée de comptage
+        wait for 1400 ns;
 
-        -- Stop simulation proprement
         CE_int <= '0';
         wait for 50 ns;
-        std.env.stop;  -- <- indispensable pour que la sim se termine proprement
+        std.env.stop;
         wait;
     end process;
 
 end Behavioral;
+

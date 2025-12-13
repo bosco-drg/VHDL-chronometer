@@ -1,17 +1,4 @@
-----------------------------------------------------------------------------------
--- Company: INSA Lyon
--- Engineer: Titouan BOCQUET
--- 
--- Create Date: 12.11.2025 15:52:02
--- Module Name: counteurdixieme - Behavioral
--- Target Devices: Artix 7 
--- Description: Compteur spécifique pour les dixièmes de seconde 
--- 
--- 
--- Additional Comments:
--- sur front montant de clk
-----------------------------------------------------------------------------------
-
+﻿
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -51,5 +38,6 @@ begin
     TC_ds <= '1' when Q_int = "1000000000" else '0';
 
 end Behavioral;
+
 
 
