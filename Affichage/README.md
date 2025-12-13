@@ -27,24 +27,6 @@ Le module utilise une technique de multiplexage pour afficher les 4 chiffres en 
 3. **Transcodeur_7seg** : Convertit la valeur numérique en code 7 segments
 4. **Transcodeur_anodes** : Active l'anode de l'afficheur correspondant
 
-## Architecture
-
-```
-┌────────────────────────────────┐
-│   Affichage (RTL)              │
-├────────────────────────────────┤
-│  Counter_2b       ┌─────┐      │
-│    (sel)      ────┤     │      │
-│                   │Mux  │───┐  │
-│  SEC_U  ┐      ───┤ 4x1 │   │  │
-│  SEC_D  ├────┤    │     │   │  │
-│  MIN_U  │    └──────┤     │   └──────┐
-│  MIN_D  └────┐   └─────┘   │  7seg ┌─┤
-│              │             └───────┤ │
-│         Transcodeur_anodes    └────┘ │
-│              │
-│            ANODES
-```
 
 ## Exemple d'affichage
 
