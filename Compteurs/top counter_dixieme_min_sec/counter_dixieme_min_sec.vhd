@@ -77,7 +77,7 @@ end component;
 begin
 
     -- Compteur des dixièmes de secondes
-    COUNTER_DIXIEME : counteurdixieme 
+    U0 : counteurdixieme 
         port map (
             ARESET => ARESET,
             CE     => CE,
@@ -87,7 +87,7 @@ begin
         );
 
     -- Compteur des unités de secondes
-    COUNTER_UNIT_SECONDE : counter_unit_4b_RE 
+    U1 : counter_unit_4b_RE 
         port map (
             ARESET => ARESET,
             --CE     => '1',
@@ -97,7 +97,7 @@ begin
         );
 
     -- Compteur des dizaines de secondes
-    COUNTER_DIZAINE_SECONDE : Counter_Diz_4b_RE
+    U2 : Counter_Diz_4b_RE
         port map (
             ARESET => ARESET,
             TC  => TC_dizs_sig,
@@ -106,7 +106,7 @@ begin
         );
         
         -- Compteur des unités de minutes
-    COUNTER_UNIT_MIN : Counter_Unit_4b_RE
+    U3 : Counter_Unit_4b_RE
         port map (
             ARESET => ARESET,
             --CE     => '1',
@@ -114,7 +114,7 @@ begin
             Q      => OUT_UNIT_MIN,
             clock  => TC_Dizs_sig
         );
-    COUNTER_DIZAINE_MIN : Counter_Diz_4b_RE
+    U4 : Counter_Diz_4b_RE
         port map (
             ARESET => ARESET,
             TC  => TC,
