@@ -3,15 +3,15 @@ use ieee.std_logic_1164.all;
 
 entity Transcodeur_7seg is
     port (
-        A : in  std_logic_vector(3 downto 0); -- valeur hexadécimale
-        O : out std_logic_vector(6 downto 0)  -- g f e d c b a (actifs à 0)
+        entree : in  std_logic_vector(3 downto 0); -- valeur hexadécimale
+        sortie : out std_logic_vector(6 downto 0)  -- g f e d c b a (actifs à 0)
     );
 end entity Transcodeur_7seg;
 
 architecture rtl of Transcodeur_7seg is
 begin
-    with A select
-        O <=
+    with entree select
+        sortie <=
             "1000000" when "0000", -- 0
             "1111001" when "0001", -- 1
             "0100100" when "0010", -- 2
