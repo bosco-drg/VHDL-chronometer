@@ -6,7 +6,7 @@ entity Counter_2b is
     port (
         CLK   : in  std_logic;
         RESET : in  std_logic;             -- actif à 1
-        Q     : out std_logic_vector(1 downto 0)
+        OUTPUT     : out std_logic_vector(1 downto 0)
     );
 end entity Counter_2b;
 
@@ -23,6 +23,6 @@ begin
         end if;
     end process;
 
-    Q <= std_logic_vector(cnt);
+    OUTPUT <= std_logic_vector(cnt);
 
 end architecture rtl;

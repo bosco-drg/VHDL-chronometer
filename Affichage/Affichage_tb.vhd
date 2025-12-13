@@ -8,10 +8,10 @@ architecture sim of tb_Affichage is
     signal clk_aff : std_logic := '0';
     signal reset   : std_logic := '0';
 
-    signal sec_u   : std_logic_vector(3 downto 0) := "0100"; -- 4
-    signal sec_d   : std_logic_vector(3 downto 0) := "0011"; -- 3
-    signal min_u   : std_logic_vector(3 downto 0) := "0010"; -- 2
-    signal min_d   : std_logic_vector(3 downto 0) := "0001"; -- 1
+    signal out_unit_sec   : std_logic_vector(3 downto 0) := "0100"; -- 4
+    signal out_diz_sec   : std_logic_vector(3 downto 0) := "0011"; -- 3
+    signal out_unit_min   : std_logic_vector(3 downto 0) := "0010"; -- 2
+    signal out_diz_min   : std_logic_vector(3 downto 0) := "0001"; -- 1
 
     signal aff     : std_logic_vector(6 downto 0);
     signal anodes  : std_logic_vector(3 downto 0);
@@ -21,14 +21,14 @@ begin
     -- DUT
     DUT : entity work.Affichage
         port map (
-            CLK_AFF => clk_aff,
-            RESET   => reset,
-            SEC_U   => sec_u,
-            SEC_D   => sec_d,
-            MIN_U   => min_u,
-            MIN_D   => min_d,
-            AFF     => aff,
-            ANODES  => anodes
+            CLK         => clk_aff,
+            RESET       => reset,
+            OUT_UNIT_SEC => out_unit_sec,
+            OUT_DIZ_SEC  => out_diz_sec,
+            OUT_UNIT_MIN => out_unit_min,
+            OUT_DIZ_MIN  => out_diz_min,
+            AFF         => aff,
+            ANODES      => anodes
         );
 
     -- Clock
@@ -44,10 +44,10 @@ begin
         wait for 500 ns;
 
         -- Change à AF:09
-        min_d <= "1010"; -- A
-        min_u <= "1111"; -- F
-        sec_d <= "0000"; -- 0
-        sec_u <= "1001"; -- 9
+        out_diz_min <= "1010"; -- A
+        out_unit_min <= "1111"; -- F
+        out_diz_sec <= "0000"; -- 0
+        out_unit_sec <= "1001"; -- 9
 
         wait for 500 ns;
 
