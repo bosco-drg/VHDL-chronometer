@@ -1,19 +1,14 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company: INSA Lyon
+-- Engineer: Liam Morineau
+-- 
 -- 
 -- Create Date: 12.12.2025 17:22:32
--- Design Name: 
 -- Module Name: tb_dizaine_sec - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
+-- Target Devices:  Artix 7
 -- Description: 
 -- 
--- Dependencies: 
 -- 
--- Revision:
--- Revision 0.01 - File Created
 -- Additional Comments:
 -- 
 ----------------------------------------------------------------------------------
@@ -22,12 +17,11 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity tb_counter_4b_RE_dizaine_sec is
--- L'entité de testbench est toujours vide
 end tb_counter_4b_RE_dizaine_sec;
 
 architecture Behavioral of tb_counter_4b_RE_dizaine_sec is
 
-    -- Le nom du composant DOIT être celui de votre fichier source
+    
     component counter_4b_RE_dizaine_sec is
         Port (
             ARESET : in  STD_LOGIC;
@@ -42,8 +36,8 @@ architecture Behavioral of tb_counter_4b_RE_dizaine_sec is
     signal TC_s_int   : std_logic := '0';
     signal Q_vect     : STD_LOGIC_VECTOR (3 downto 0); --  4 bits ici aussi
 
-    -- Constante pour la période (facilite les modifs)
-    constant CLK_PERIOD : time := 10 ns; -- 7ns high + 7ns low
+    -- Constante pour la période 
+    constant CLK_PERIOD : time := 10 ns; 
 
 begin
 

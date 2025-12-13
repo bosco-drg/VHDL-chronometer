@@ -1,3 +1,16 @@
+----------------------------------------------------------------------------------
+-- Company: INSA Lyon
+-- Engineer:  Titouan BOCQUET
+-- 
+-- Create Date: 12.11.2025 15:52:02
+-- Module Name: counter_4b_RE_unit_sec - Behavioral
+-- Target Devices: Artix 7 
+-- Description: tb pour le compteur des unités 
+-- 
+-- 
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -63,7 +76,7 @@ begin
         -- Stop simulation proprement
         CE_int <= '0';
         wait for 50 ns;
-        std.env.stop;  -- <- indispensable pour que la sim se termine proprement
+        std.env.stop;  -- <- vu dans la doc mais pas certain ?
         wait;
     end process;
 

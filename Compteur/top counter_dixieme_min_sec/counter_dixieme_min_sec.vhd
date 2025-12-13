@@ -1,21 +1,17 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company: INSA Lyon
+-- Engineer: Titouan BOCQUET
 -- 
 -- Create Date: 12.12.2025 16:39:05
--- Design Name: 
 -- Module Name: counter_dixieme_min_sec - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
+-- Target Devices: Artix 7
 -- Description: 
+-- Entité top agrégant les compteurs et les connectants entre eux en cascade
 -- 
--- Dependencies: 
+-- Dependencies: IEEE.STD_LOGIC_1164.ALL pour les vecteurs
 -- 
--- Revision:
--- Revision 0.01 - File Created
 -- Additional Comments:
--- 
+-- L'image du cablage RTL n'est pas la meme que le sujet mais certainement nom vraiable diff.
 ----------------------------------------------------------------------------------
 
 library IEEE;

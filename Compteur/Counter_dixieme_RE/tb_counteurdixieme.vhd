@@ -1,3 +1,17 @@
+----------------------------------------------------------------------------------
+-- Company: INSA Lyon
+-- Engineer: Titouan BOCQUET
+-- 
+-- Create Date: 12.11.2025 17:22:32
+-- Module Name: tb_dizaine_sec - Behavioral
+-- Target Devices: Artix 7 
+-- Description: tb du compteur des dizièmes de secondes
+-- 
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 

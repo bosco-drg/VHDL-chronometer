@@ -1,21 +1,15 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company: INSA Lyon
+-- Engineer: Titouan BOCQUET
 -- 
 -- Create Date: 12.11.2025 15:52:02
--- Design Name: 
--- Module Name: counter_4b_RE_unit_sec - Behavioral
--- Project Name: Unit seconde
--- Target Devices: 
--- Tool Versions: 
--- Description: 
+-- Module Name: counteurdixieme - Behavioral
+-- Target Devices: Artix 7 
+-- Description: Compteur spécifique pour les dixièmes de seconde 
 -- 
--- Dependencies: 
 -- 
--- Revision:
--- Revision 0.01 - File Created
 -- Additional Comments:
--- 
+-- sur front montant de clk
 ----------------------------------------------------------------------------------
 
 library IEEE;

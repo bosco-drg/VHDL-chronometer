@@ -1,3 +1,19 @@
+----------------------------------------------------------------------------------
+-- Company: INSA Lyon
+-- Engineer: Titouan BOCQUET
+-- 
+-- Create Date: 12.12.2025 18:02:24
+-- Module Name: tb_counter_dixieme_min_sec 
+-- Target Devices: Artix 7
+-- Description: 
+-- TB testant les compteurs en cascade, on y retrouve toutes les entrées et sorties
+-- pour vérifier leur fonctionnement.
+--
+-- Dependencies: IEEE.STD_LOGIC_1164.ALL 
+-- 
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -29,13 +45,11 @@ architecture Behavioral of tb_top_chrono is
 
     -- Constantes
     constant CLK_PERIOD : time := 10 ns;
-    constant SIM_TIME   : time := 3 ms; -- durée totale de la simulation
+    constant SIM_TIME   : time := 3 ms; -- durée  de la simulation
 
 begin
 
-    --------------------------------------------------------------------
-    -- Instanciation du DUT (Device Under Test)
-    --------------------------------------------------------------------
+    --entité de plus au niveau compteur
     UUT : top_chrono
         port map (
             ARESET => ARESET,
@@ -46,9 +60,8 @@ begin
             TC_SEC => TC_SEC
         );
 
-    --------------------------------------------------------------------
-    -- Génération de l'horloge avec arrêt automatique
-    --------------------------------------------------------------------
+    
+    -- horloge
     clk_process : process
     begin
         while now < SIM_TIME loop
@@ -60,9 +73,8 @@ begin
         wait; -- fin propre
     end process;
 
-    --------------------------------------------------------------------
-    -- Stimuli
-    --------------------------------------------------------------------
+    
+    -- Jouer sur les inputs (aussi appelés stimulis dans la doc AMD)
     stim_proc : process
     begin
         -- Reset initial

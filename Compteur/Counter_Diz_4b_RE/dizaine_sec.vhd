@@ -1,21 +1,16 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company: INSA Lyon
+-- Engineer: Liam Morineau
 -- 
 -- Create Date: 12.11.2025 15:52:02
--- Design Name: 
 -- Module Name: Counter_Diz_4b_RE - Behavioral
 -- Project Name: Unit seconde
--- Target Devices: 
--- Tool Versions: 
+-- Target Devices: Artix 7
 -- Description: 
+-- Compteur pour les dizaines, CP = [0,1,2,3,4,5,6,7,8,9]
 -- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
 -- Additional Comments:
--- 
+-- Sur front descendant de CLK
 ----------------------------------------------------------------------------------
 
 
@@ -23,15 +18,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity Counter_Diz_4b_RE is
     Port ( ARESET : in STD_LOGIC;
