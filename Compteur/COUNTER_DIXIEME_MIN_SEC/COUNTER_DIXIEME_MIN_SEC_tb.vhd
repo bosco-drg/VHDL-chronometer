@@ -49,7 +49,7 @@ architecture Behavioral of tb_top_chrono is
     signal TC          : STD_LOGIC;
 
     constant CLK_PERIOD : time := 100 ms;
-    constant SIM_TIME   : time := 70000 ms;
+    constant SIM_TIME   : time := 3600001 ms;
 
 begin
 
