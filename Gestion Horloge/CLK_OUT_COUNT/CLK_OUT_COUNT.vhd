@@ -23,35 +23,48 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity CLK_OUT_COUNT is
     Port (
-        SEL_SPEED_CLK : in  STD_LOGIC;  
-        CLK_OUT       : out STD_LOGIC   
+        CLK_IN        : in  STD_LOGIC;
+        SEL_SPEED_CLK : in  STD_LOGIC;
+        CLK_OUT       : out STD_LOGIC
     );
 end CLK_OUT_COUNT;
 
 architecture Behavioral of CLK_OUT_COUNT is
 
-    constant CLK_NORMAL_PERIOD : time := 100 ms;
-    constant CLK_FAST_PERIOD : time := 0.1666666667 ms;
+    constant CLK_IN_FREQ      : integer := 100_000_000;
+    constant CLK_NORMAL_FREQ  : integer := 10;        
+    constant CLK_FAST_FREQ    : integer := 6000;      
+
+    constant DIV_NORMAL : integer := CLK_IN_FREQ / (2 * CLK_NORMAL_FREQ);
+    constant DIV_FAST   : integer := CLK_IN_FREQ / (2 * CLK_FAST_FREQ);
+
+    signal counter   : integer := 0;
+    signal clk_state : std_logic := '0';
 
 begin
 
-    process
-        variable temp_period : time;
+    process (CLK_IN)
+        variable div_value : integer;
     begin
-        
-        if SEL_SPEED_CLK = '1' then
-            temp_period := CLK_FAST_PERIOD;
-        else
-            temp_period := CLK_NORMAL_PERIOD;
-        end if;
+        if rising_edge(CLK_IN) then
+            if SEL_SPEED_CLK = '1' then
+                div_value := DIV_FAST;
+            else
+                div_value := DIV_NORMAL;
+            end if;
 
-        
-        CLK_OUT <= '0';
-        wait for temp_period / 2;
-        CLK_OUT <= '1';
-        wait for temp_period / 2;
+            if counter = div_value - 1 then
+                counter   <= 0;
+                clk_state <= not clk_state;
+            else
+                counter <= counter + 1;
+            end if;
+        end if;
     end process;
 
+    CLK_OUT <= clk_state;
+
 end Behavioral;
+
 
 
