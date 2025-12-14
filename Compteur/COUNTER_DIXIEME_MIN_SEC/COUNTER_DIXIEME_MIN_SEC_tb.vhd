@@ -25,8 +25,8 @@ architecture Behavioral of tb_top_chrono is
 
     component COUNTER_DIXIEME_MIN_SEC
         Port (
-            clk     : in  STD_LOGIC;
-            ARESET  : in  STD_LOGIC;
+            CLK     : in  STD_LOGIC;
+            RESET  : in  STD_LOGIC;
             CE      : in  STD_LOGIC;
             LED_OUT : out STD_LOGIC_VECTOR (9 downto 0);
             OUT_UNIT_SEC : out STD_LOGIC_VECTOR (3 downto 0);
@@ -38,8 +38,8 @@ architecture Behavioral of tb_top_chrono is
     end component;
 
     -- Signaux internes
-    signal clk         : STD_LOGIC := '0';
-    signal ARESET      : STD_LOGIC := '0';
+    signal CLK         : STD_LOGIC := '0';
+    signal RESET      : STD_LOGIC := '0';
     signal CE          : STD_LOGIC := '1';
     signal LED_OUT     : STD_LOGIC_VECTOR (9 downto 0);
     signal OUT_UNIT_SEC : STD_LOGIC_VECTOR (3 downto 0);
@@ -56,8 +56,8 @@ begin
     
     UUT : COUNTER_DIXIEME_MIN_SEC
         port map (
-            clk     => clk,
-            ARESET  => ARESET,
+            CLK     => CLK,
+            RESET  => RESET,
             CE      => CE,
             LED_OUT => LED_OUT,
             OUT_UNIT_SEC => OUT_UNIT_SEC,
@@ -71,9 +71,9 @@ begin
     clk_process : process
     begin
         while True loop
-            clk <= '0';
+            CLK <= '0';
             wait for CLK_PERIOD / 2;
-            clk <= '1';
+            CLK <= '1';
             wait for CLK_PERIOD / 2;
         end loop;
         wait;
@@ -82,11 +82,11 @@ begin
     -- generateur de stimulis
     stim_proc : process
     begin
-        ARESET <= '1';
+        RESET <= '1';
         CE <= '0';
         wait for 50 ns;
 
-        ARESET <= '0';
+        RESET <= '0';
         wait for 50 ns;
         CE <= '1';
 
