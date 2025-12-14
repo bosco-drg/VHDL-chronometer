@@ -36,12 +36,12 @@ architecture Behavioral of tb_counter_4b_RE_dizaine_sec is
     signal TC_s_int   : std_logic := '0';
     signal Q_vect     : STD_LOGIC_VECTOR (3 downto 0); --  4 bits ici aussi
 
-    -- Constante pour la période 
+    -- période de la clock
     constant CLK_PERIOD : time := 10 ns; 
 
 begin
 
-    -- Instanciation du DUT (Device Under Test)
+   
     uut : counter_4b_RE_dizaine_sec
         port map (
             ARESET => ARESET_int,
@@ -50,7 +50,7 @@ begin
             TC_s   => TC_s_int
         );
 
-    -- Process de génération d'horloge
+    -- Process horloge
     TC_s_gen : process
     begin
         TC_s_int <= '0';
@@ -59,29 +59,27 @@ begin
         wait for CLK_PERIOD / 2;
     end process;
 
-    -- Process de stimulation
+    
     stim_proc : process
     begin
-        -- 1. Initialisation
+        
         ARESET_int <= '1'; -- Reset actif
         wait for 100 ns;
 
-        -- 2. Relâchement du Reset : Le compteur démarre
+        
         ARESET_int <= '0';
         
-        -- 3. Attente pour voir le compteur tourner
-        -- Il faut au moins 10 coups d'horloge pour voir TC_Ds passer à 1
+        
         wait for 200 ns; 
 
-        -- 4. Test du Reset pendant le fonctionnement
+        
         ARESET_int <= '1';
         wait for 30 ns;
         ARESET_int <= '0';
         
         wait for 100 ns;
 
-        -- 5. Fin de simulation
-        assert false report "Fin de la simulation (Normal)" severity failure;
+        
     end process;
 
 end Behavioral;
