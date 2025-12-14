@@ -1,4 +1,4 @@
-----------------------------------------------------------------------------------
+﻿----------------------------------------------------------------------------------
 -- Company: INSA Lyon
 -- Engineer: Titouan BOCQUET
 -- 
@@ -38,7 +38,7 @@ architecture Behavioral of tb_counteurdixieme is
 
 begin
 
-    -- Instanciation du compteur
+    -- compteur
     uut : counteurdixieme
         port map (
             ARESET => ARESET_int,
@@ -59,7 +59,7 @@ begin
         end loop;
     end process;
 
-    -- Process de stimulation
+    
     stim_proc : process
     begin
         -- Reset actif pendant 100 ns
