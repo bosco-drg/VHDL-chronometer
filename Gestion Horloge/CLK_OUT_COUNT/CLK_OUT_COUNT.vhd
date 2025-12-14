@@ -33,7 +33,7 @@ architecture Behavioral of CLK_OUT_COUNT is
 
     constant CLK_IN_FREQ      : integer := 100_000_000;
     constant CLK_NORMAL_FREQ  : integer := 10;        
-    constant CLK_FAST_FREQ    : integer := 6000;      
+    constant CLK_FAST_FREQ    : integer := 600;      
 
     constant DIV_NORMAL : integer := CLK_IN_FREQ / (2 * CLK_NORMAL_FREQ);
     constant DIV_FAST   : integer := CLK_IN_FREQ / (2 * CLK_FAST_FREQ);
