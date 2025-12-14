@@ -5,15 +5,9 @@
 -- Create Date: 14.12.2025 15:46:35
 -- Design Name: 
 -- Module Name: tb_CLK_OUT_COUNT - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
+-- Description: test bench di CLK_OUT_COUNT
 -- 
--- Dependencies: 
 -- 
--- Revision:
--- Revision 0.01 - File Created
 -- Additional Comments:
 -- 
 ----------------------------------------------------------------------------------
@@ -27,7 +21,7 @@ end tb_clk_out_count;
 
 architecture Behavioral of tb_clk_out_count is
 
-    -- Composant à tester
+    
     component CLK_OUT_COUNT
         Port (
             SEL_SPEED_CLK : in  STD_LOGIC;
@@ -39,7 +33,7 @@ architecture Behavioral of tb_clk_out_count is
     signal SEL_SPEED_CLK_int : STD_LOGIC := '0';
     signal CLK_OUT_int       : STD_LOGIC;
 
-    -- Constantes pour simulation
+    
     constant SIM_TIME : time := 500 ms;  -- durée totale de la simulation
 
 begin
@@ -56,16 +50,16 @@ begin
     stim_proc : process
     begin
 
-        -- Vitesse lente
+        -- lent
         SEL_SPEED_CLK_int <= '0';
         wait for 200 ms;
 
-        -- Passe en mode rapide
+        -- rapide
         SEL_SPEED_CLK_int <= '1';
         
         wait for 200 ms;
 
-        -- Retour au mode lent
+        -- lent
         SEL_SPEED_CLK_int <= '0';
         wait for 100 ms;
 
