@@ -62,7 +62,7 @@ begin
     
     stim_proc : process
     begin
-        -- Reset actif pendant 100 ns
+        
         ARESET_int <= '1';
         CE_int <= '0';
         wait for 70 ns;
@@ -70,14 +70,14 @@ begin
         ARESET_int <= '0';
         wait for 70 ns;
 
-        -- Activation du comptage
+        
         CE_int <= '1';
-        wait for 1400 ns; -- durée de comptage
+        wait for 1400 ns;
 
-        -- Stop simulation proprement
+        
         CE_int <= '0';
         wait for 50 ns;
-        std.env.stop;  -- <- indispensable pour que la sim se termine proprement
+        std.env.stop;  -- <-  sim se termine 
         wait;
     end process;
 
