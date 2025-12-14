@@ -23,77 +23,78 @@ end tb_top_chrono;
 
 architecture Behavioral of tb_top_chrono is
 
-    -- Composant à tester
-    component top_chrono
+    component COUNTER_DIXIEME_MIN_SEC
         Port (
-            ARESET : in  STD_LOGIC;
-            CE     : in  STD_LOGIC;
-            CLK    : in  STD_LOGIC;
-            Q_DIX  : out STD_LOGIC_VECTOR (9 downto 0);
-            Q_SEC  : out STD_LOGIC_VECTOR (3 downto 0);
-            TC_SEC : out STD_LOGIC
+            clk     : in  STD_LOGIC;
+            ARESET  : in  STD_LOGIC;
+            CE      : in  STD_LOGIC;
+            LED_OUT : out STD_LOGIC_VECTOR (9 downto 0);
+            OUT_UNIT_SEC : out STD_LOGIC_VECTOR (3 downto 0);
+            OUT_DIZ_SEC  : out STD_LOGIC_VECTOR (3 downto 0);
+            OUT_UNIT_MIN : out STD_LOGIC_VECTOR (3 downto 0);
+            OUT_DIZ_MIN  : out STD_LOGIC_VECTOR (3 downto 0);
+            TC : out std_logic
         );
     end component;
 
     -- Signaux internes
-    signal ARESET : STD_LOGIC := '0';
-    signal CE     : STD_LOGIC := '1';
-    signal CLK    : STD_LOGIC := '0';
-    signal Q_DIX  : STD_LOGIC_VECTOR (9 downto 0);
-    signal Q_SEC  : STD_LOGIC_VECTOR (3 downto 0);
-    signal TC_SEC : STD_LOGIC;
+    signal clk         : STD_LOGIC := '0';
+    signal ARESET      : STD_LOGIC := '0';
+    signal CE          : STD_LOGIC := '1';
+    signal LED_OUT     : STD_LOGIC_VECTOR (9 downto 0);
+    signal OUT_UNIT_SEC : STD_LOGIC_VECTOR (3 downto 0);
+    signal OUT_DIZ_SEC  : STD_LOGIC_VECTOR (3 downto 0);
+    signal OUT_UNIT_MIN : STD_LOGIC_VECTOR (3 downto 0);
+    signal OUT_DIZ_MIN  : STD_LOGIC_VECTOR (3 downto 0);
+    signal TC          : STD_LOGIC;
 
-    -- Constantes
-    constant CLK_PERIOD : time := 10 ns;
-    constant SIM_TIME   : time := 3 ms; -- durée  de la simulation
+    constant CLK_PERIOD : time := 0.01 ns;
+    constant SIM_TIME   : time := 1 ms;
 
 begin
 
-    --entité de plus au niveau compteur
-    UUT : top_chrono
+    -- Instanciation du DUT (Device Under Test)
+    UUT : COUNTER_DIXIEME_MIN_SEC
         port map (
-            ARESET => ARESET,
-            CE     => CE,
-            CLK    => CLK,
-            Q_DIX  => Q_DIX,
-            Q_SEC  => Q_SEC,
-            TC_SEC => TC_SEC
+            clk     => clk,
+            ARESET  => ARESET,
+            CE      => CE,
+            LED_OUT => LED_OUT,
+            OUT_UNIT_SEC => OUT_UNIT_SEC,
+            OUT_DIZ_SEC  => OUT_DIZ_SEC,
+            OUT_UNIT_MIN => OUT_UNIT_MIN,
+            OUT_DIZ_MIN  => OUT_DIZ_MIN,
+            TC => TC
         );
 
-    
-    -- horloge
+    -- Processus d'horloge
     clk_process : process
     begin
-        while now < SIM_TIME loop
-            CLK <= '0';
+        while True loop
+            clk <= '0';
             wait for CLK_PERIOD / 2;
-            CLK <= '1';
+            clk <= '1';
             wait for CLK_PERIOD / 2;
         end loop;
-        wait; -- fin propre
+        wait;
     end process;
 
-    
-    -- Jouer sur les inputs (aussi appelés stimulis dans la doc AMD)
+    -- Processus de stimulation
     stim_proc : process
     begin
-        -- Reset initial
         ARESET <= '1';
         CE <= '0';
         wait for 50 ns;
 
         ARESET <= '0';
+        wait for 50 ns;
         CE <= '1';
-        
 
-        -- Laisse tourner la simulation
         wait for SIM_TIME;
 
-        -- Stop du comptage
         CE <= '0';
-        
-
-        wait; -- fin du process
+        wait;
     end process;
 
 end Behavioral;
+
