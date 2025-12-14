@@ -36,7 +36,7 @@ begin
     begin
         if ARESET = '1' then
             Q_int <= "0000000001";  
-        elsif rising_edge(clk) then
+        elsif falling_edge(clk) then
             if CE = '1' then 
                 if Q_INT = 512 then 
                     Q_INT <= "0000000001"; 

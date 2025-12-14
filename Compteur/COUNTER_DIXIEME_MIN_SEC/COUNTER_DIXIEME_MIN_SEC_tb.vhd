@@ -48,12 +48,12 @@ architecture Behavioral of tb_top_chrono is
     signal OUT_DIZ_MIN  : STD_LOGIC_VECTOR (3 downto 0);
     signal TC          : STD_LOGIC;
 
-    constant CLK_PERIOD : time := 0.01 ns;
-    constant SIM_TIME   : time := 1 ms;
+    constant CLK_PERIOD : time := 100 ms;
+    constant SIM_TIME   : time := 70000 ms;
 
 begin
 
-    -- Instanciation du DUT (Device Under Test)
+    
     UUT : COUNTER_DIXIEME_MIN_SEC
         port map (
             clk     => clk,
@@ -79,7 +79,7 @@ begin
         wait;
     end process;
 
-    -- Processus de stimulation
+    -- generateur de stimulis
     stim_proc : process
     begin
         ARESET <= '1';
