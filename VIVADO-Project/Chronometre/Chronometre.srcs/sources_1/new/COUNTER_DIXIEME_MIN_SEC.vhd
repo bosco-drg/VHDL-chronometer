@@ -40,7 +40,8 @@ architecture Behavioral of COUNTER_DIXIEME_MIN_SEC is
             CE     : in STD_LOGIC; 
             TC_ds  : out STD_LOGIC; 
             Q      : out STD_LOGIC_VECTOR(9 downto 0); 
-            clk    : in STD_LOGIC
+            clk    : in STD_LOGIC;
+            DP      : out STD_LOGIC
         );
     end component;
 
@@ -79,7 +80,8 @@ begin
             CE     => CE,
             TC_ds  => TC_ds_sig,
             Q      => LED_OUT,   
-            clk    => CLK
+            clk    => CLK,
+            DP     => DP
         );
 
     -- Compteur des unités de secondes

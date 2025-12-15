@@ -46,9 +46,9 @@ begin
                 end if;
             end if;
         end if;
-        DP <= '0' when Q_int <= 16 else '1';
+        
     end process;
-
+    DP <= '0' when Q_int <= 32 else '1';
     Q <= std_logic_vector(Q_int);
     TC_ds <= '1' when Q_int = "1000000000" else '0';
     

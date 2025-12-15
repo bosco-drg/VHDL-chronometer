@@ -38,7 +38,7 @@ architecture rtl of Chronometre is
     -- TC cascade (issu du dernier compteur) + TC "instant fin" conforme au sujet
     signal tc_cascade : std_logic;
     signal tc_end     : std_logic;
-    signal DP_in         : std_logic;
+    signal dp_blink         : std_logic;
 
 begin
 
@@ -72,7 +72,7 @@ begin
             OUT_UNIT_MIN => unit_min,
             OUT_DIZ_MIN  => diz_min,
             TC           => tc_cascade,
-            DP           => DP_out
+            DP           => dp_blink
         );
 
     -- TC demandé : fin à 59 min 59 sec 9/10e sec
@@ -100,7 +100,7 @@ begin
             OUT_DIZ_MIN  => diz_min,
             AFF          => AFF,
             ANODES       => ANODES,
-            DP_in           => DP_in,
+            DP_in           => dp_blink,
             DP_out => DP_out
         );
 
