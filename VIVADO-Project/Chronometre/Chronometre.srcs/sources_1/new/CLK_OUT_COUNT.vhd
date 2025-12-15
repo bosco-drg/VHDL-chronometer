@@ -53,7 +53,7 @@ begin
                 div_value := DIV_NORMAL;
             end if;
 
-            if counter = div_value - 1 then
+            if counter >= div_value - 1 then
                 counter   <= 0;
                 clk_state <= not clk_state;
             else

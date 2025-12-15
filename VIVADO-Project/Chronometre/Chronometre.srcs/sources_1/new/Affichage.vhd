@@ -12,7 +12,7 @@ entity Affichage is
         OUT_DIZ_MIN     : in  std_logic_vector(3 downto 0);
 
         AFF       : out std_logic_vector(6 downto 0);
-        ANODES    : out std_logic_vector(3 downto 0)
+        ANODES    : out std_logic_vector(7 downto 0)
     );
 end entity Affichage;
 
@@ -20,6 +20,7 @@ architecture rtl of Affichage is
 
     signal sel      : std_logic_vector(1 downto 0);
     signal nibble   : std_logic_vector(3 downto 0);
+    signal anodes_4 : std_logic_vector(3 downto 0);
 
 begin
 
@@ -33,8 +34,10 @@ begin
     U_AN : entity work.Transcodeur_anodes
         port map (
             sel_anode  => sel,
-            vect_anode => ANODES
+            vect_anode => anodes_4
         );
+        
+        ANODES <= "1111" & anodes_4;
 
     U_MUX : entity work.Mux_4x1x4b
         port map (
@@ -53,3 +56,4 @@ begin
         );
 
 end architecture rtl;
+
