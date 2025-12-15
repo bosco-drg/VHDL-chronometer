@@ -15,7 +15,8 @@ entity Chronometre is
         LED_OUT : out std_logic_vector(9 downto 0); -- chenillard dixièmes
         AFF     : out std_logic_vector(6 downto 0); -- segments CA..CG (actifs bas)
         ANODES  : out std_logic_vector(7 downto 0); -- AN0..AN3 (actifs bas)
-        TC      : out std_logic                -- terminal count (59:59.9)
+        TC      : out std_logic    ;            -- terminal count (59:59.9)
+        DP_out  : out std_logic
     );
 end entity Chronometre;
 
@@ -37,6 +38,7 @@ architecture rtl of Chronometre is
     -- TC cascade (issu du dernier compteur) + TC "instant fin" conforme au sujet
     signal tc_cascade : std_logic;
     signal tc_end     : std_logic;
+    signal DP_in         : std_logic;
 
 begin
 
@@ -69,7 +71,8 @@ begin
             OUT_DIZ_SEC  => diz_sec,
             OUT_UNIT_MIN => unit_min,
             OUT_DIZ_MIN  => diz_min,
-            TC           => tc_cascade
+            TC           => tc_cascade,
+            DP           => DP_out
         );
 
     -- TC demandé : fin à 59 min 59 sec 9/10e sec
@@ -96,7 +99,9 @@ begin
             OUT_UNIT_MIN => unit_min,
             OUT_DIZ_MIN  => diz_min,
             AFF          => AFF,
-            ANODES       => ANODES
+            ANODES       => ANODES,
+            DP_in           => DP_in,
+            DP_out => DP_out
         );
 
 end architecture rtl;

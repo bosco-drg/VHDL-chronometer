@@ -12,7 +12,10 @@ entity Affichage is
         OUT_DIZ_MIN     : in  std_logic_vector(3 downto 0);
 
         AFF       : out std_logic_vector(6 downto 0);
-        ANODES    : out std_logic_vector(7 downto 0)
+        ANODES    : out std_logic_vector(7 downto 0);
+        
+        DP_in        : in std_logic;
+        DP_out       : out std_logic
     );
 end entity Affichage;
 
@@ -34,7 +37,9 @@ begin
     U_AN : entity work.Transcodeur_anodes
         port map (
             sel_anode  => sel,
-            vect_anode => anodes_4
+            vect_anode => anodes_4,
+            DP_in => DP_in,
+            DP_out => DP_out
         );
         
         ANODES <= "1111" & anodes_4;
@@ -47,6 +52,7 @@ begin
             D   => OUT_DIZ_MIN,
             sel => sel,
             O   => nibble
+           
         );
 
     U_7S : entity work.Transcodeur_7seg

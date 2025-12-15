@@ -27,7 +27,8 @@ entity COUNTER_DIXIEME_MIN_SEC is
         OUT_DIZ_SEC : out STD_LOGIC_VECTOR (3 downto 0);
         OUT_UNIT_MIN : out STD_LOGIC_VECTOR (3 downto 0);
         OUT_DIZ_MIN : out STD_LOGIC_VECTOR (3 downto 0);
-        TC : out std_logic
+        TC : out std_logic;
+        DP : out std_logic 
     );
 end COUNTER_DIXIEME_MIN_SEC;
 
