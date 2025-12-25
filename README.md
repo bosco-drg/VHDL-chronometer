@@ -16,7 +16,6 @@ This project implements a complete digital chronometer capable of measuring time
 - **Visual Indicators** : LED rotating pattern for visualizing tenths
 - **Counter Cascading** : Modular architecture with reusable counters
 
----
 
 ## Project Architecture
 
@@ -79,7 +78,6 @@ Dynamic display module with :
 - `Mux_4x1x4b` : 4-to-1 multiplexer (4 bits)
 - `Counter_2b` : 2-bit counter for anode rotation
 
----
 
 ## Chronometer Usage
 
@@ -91,21 +89,17 @@ Dynamic display module with :
 | 7-seg display | Displays MM:SS.D (minutes:seconds.tenths) |
 | LEDs | Rotating pattern for tenths |
 
----
 
 ## Hardware Implementation
 
+<div align="center">
+
 ![Nexys A7 FPGA Board](docs/nexysA7.png)
 
-The project targets the **Nexys A7** board which provides :
-- Artix-7 FPGA
-- 100 MHz clock
-- 4 7-segment displays
-- 16 switches and buttons
-- 16 LEDs
-- USB interface
+**Nexys A7 Board** — *Artix-7 FPGA • 100 MHz • 4 × 7-Segment Displays*
 
----
+</div>
+
 
 ## 🧪 Testing & Verification
 
@@ -118,38 +112,10 @@ Each module comes with an associated testbench :
 - `tb_unit_second.vhd` : Test of units seconds counter
 - `tb_dizaine_sec.vhd` : Test of tens seconds counter
 
-### Running Tests
-```bash
-# With Vivado
-vivado -mode batch -source run_simulation.tcl
-
-# Or with GHDL
-ghdl -a Chronometre.vhd Chronometre_tb.vhd
-ghdl -e Chronometre_tb
-ghdl -r Chronometre_tb
-```
 
 ---
 
-## Learning Objectives
 
-This project covers :
-- ✅ Hierarchical hardware architecture
-- ✅ Synthesis of counters and registers
-- ✅ Temporal multiplexing of displays
-- ✅ Clock management and temporal domains
-- ✅ Testbenches and functional verification
-- ✅ Deployment on real FPGA
-
----
-
-## Resources & References
-
-- **Nexys A7 Documentation** : Xilinx/Digilent
-- **IEEE VHDL Standard** : IEEE 1076-2008
-- **Vivado Design Suite** : Xilinx
-
----
 
 ## Authors
 
