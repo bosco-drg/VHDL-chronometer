@@ -9,6 +9,7 @@ entity Mux_4x1x4b is
         D   : in  std_logic_vector(3 downto 0);
         sel : in  std_logic_vector(1 downto 0);
         O   : out std_logic_vector(3 downto 0)
+
     );
 end entity Mux_4x1x4b;
 

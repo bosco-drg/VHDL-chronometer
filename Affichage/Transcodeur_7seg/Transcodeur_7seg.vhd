@@ -5,6 +5,7 @@ entity Transcodeur_7seg is
     port (
         entree : in  std_logic_vector(3 downto 0);
         sortie : out std_logic_vector(6 downto 0)
+        
     );
 end entity Transcodeur_7seg;
 

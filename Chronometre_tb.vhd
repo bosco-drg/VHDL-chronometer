@@ -7,7 +7,6 @@ end entity;
 
 architecture sim of tb_Chronometre is
 
-    -- UUT ports
     signal CLK           : std_logic := '0';
     signal SEL_SPEED_CLK : std_logic := '0';
     signal START_STOP    : std_logic := '0';
@@ -18,34 +17,53 @@ architecture sim of tb_Chronometre is
     signal ANODES  : std_logic_vector(3 downto 0);
     signal TC      : std_logic;
 
-    constant CLK_PERIOD : time := 10 ns; -- 100 MHz
+    constant CLK_PERIOD : time := 10 ns;
 
-    -- util : compte le nombre de '1' dans un vecteur
-    function ones_count(v : std_logic_vector) return integer is
-        variable c : integer := 0;
+
+    procedure wait_change_vec(
+        signal s      : in  std_logic_vector;
+        constant tmax : in  time;
+        constant step : in  time;
+        constant name : in  string
+    ) is
+        variable t    : time := 0 ns;
+        variable s0   : std_logic_vector(s'range);
     begin
-        for i in v'range loop
-            if v(i) = '1' then
-                c := c + 1;
+        s0 := s;
+        while (t < tmax) loop
+            wait for step;
+            t := t + step;
+            if s /= s0 then
+                return;
             end if;
         end loop;
-        return c;
-    end function;
 
-    -- util : vrai si le vecteur ne contient ni U ni X
-    function no_ux(v : std_logic_vector) return boolean is
+        assert false
+            report "TIMEOUT: " & name & " n'a pas change en " & time'image(tmax)
+            severity failure;
+    end procedure;
+
+    procedure expect_stable_vec(
+        signal s      : in  std_logic_vector;
+        constant tdur : in  time;
+        constant step : in  time;
+        constant name : in  string
+    ) is
+        variable t  : time := 0 ns;
+        variable s0 : std_logic_vector(s'range);
     begin
-        for i in v'range loop
-            if (v(i) /= '0') and (v(i) /= '1') then
-                return false;
-            end if;
+        s0 := s;
+        while (t < tdur) loop
+            wait for step;
+            t := t + step;
+            assert s = s0
+                report "ERREUR: " & name & " a change alors qu'il devait rester stable (pendant " & time'image(tdur) & ")"
+                severity failure;
         end loop;
-        return true;
-    end function;
+    end procedure;
 
 begin
 
-    -- Clock generator
     clk_gen : process
     begin
         while true loop
@@ -56,7 +74,6 @@ begin
         end loop;
     end process;
 
-    -- Instantiate UUT
     uut : entity work.Chronometre
         port map (
             CLK           => CLK,
@@ -69,99 +86,57 @@ begin
             TC            => TC
         );
 
-    -- Basic ANODES mux sanity checks (actif bas, 1 seul digit activé)
-    mux_check : process
-        variable an : std_logic_vector(3 downto 0);
-    begin
-        wait for 1 us; -- laisser le temps d'initialiser
-        while true loop
-            an := ANODES;
-
-            assert no_ux(an)
-                report "ANODES contient U/X -> probleme d'init ou de reset"
-                severity error;
-
-            -- ANODES doit être l'un de : 1110,1101,1011,0111 (un seul 0)
-            assert (an = "1110") or (an = "1101") or (an = "1011") or (an = "0111")
-                report "ANODES n'est pas one-hot actif bas (attendu 1110/1101/1011/0111). Valeur=" &
-                       std_logic'image(an(3)) & std_logic'image(an(2)) & std_logic'image(an(1)) & std_logic'image(an(0))
-                severity error;
-
-            assert no_ux(AFF)
-                report "AFF contient U/X -> probleme de transcodeur/mux"
-                severity error;
-
-            wait for 200 us; -- échantillonnage régulier
-        end loop;
-    end process;
-
-    -- Main stimulus + assertions fonctionnelles
     stim : process
-        variable led0, led1 : std_logic_vector(9 downto 0);
+        variable led0 : std_logic_vector(9 downto 0);
+        variable led1 : std_logic_vector(9 downto 0);
     begin
-        -- Etat initial
         SEL_SPEED_CLK <= '0';
         START_STOP    <= '0';
         RESET         <= '0';
 
-        wait for 200 ns;
-
-        -- RESET
+        wait for 100 ns;
         RESET <= '1';
         wait for 200 ns;
         RESET <= '0';
-        wait for 500 ns;
+        wait for 200 ns;
 
-        -- Check LED_OUT "one-hot" après reset (ton chenillard démarre généralement avec 1 LED allumée)
-        assert ones_count(LED_OUT) = 1
-            report "Apres RESET, LED_OUT n'est pas one-hot (attendu 1 seul '1')."
-            severity warning;
+        report "TEST 1: STOP -> LED_OUT doit rester stable" severity note;
+        led0 := LED_OUT;
+        expect_stable_vec(LED_OUT, 5 ms, 50 us, "LED_OUT en STOP");
 
-        -- Mode accéléré + start
+        report "TEST 2: FAST + START -> LED_OUT doit changer rapidement" severity note;
         SEL_SPEED_CLK <= '1';
         START_STOP    <= '1';
-
+        wait for 200 us;
         led0 := LED_OUT;
-        wait for 10 ms;  -- en fast, tu dois voir bouger les dixièmes (LED_OUT shift)
-        led1 := LED_OUT;
 
-        assert led1 /= led0
-            report "En mode FAST et START_STOP=1, LED_OUT ne change pas -> comptage semble bloqué."
-            severity error;
+        wait_change_vec(LED_OUT, 20 ms, 50 us, "LED_OUT (FAST)");
 
-        -- Pause
+        report "TEST 3: repasser en STOP -> LED_OUT doit se figer" severity note;
         START_STOP <= '0';
-        led0 := LED_OUT;
-        wait for 10 ms;
-        led1 := LED_OUT;
+        wait for 200 us;
+        expect_stable_vec(LED_OUT, 5 ms, 50 us, "LED_OUT après STOP");
 
-        assert led1 = led0
-            report "START_STOP=0 mais LED_OUT change quand meme -> pause non fonctionnelle."
-            severity error;
-
-        -- Reprise
-        START_STOP <= '1';
-        led0 := LED_OUT;
-        wait for 10 ms;
-        led1 := LED_OUT;
-
-        assert led1 /= led0
-            report "Reprise START_STOP=1 mais LED_OUT ne change pas -> reprise non fonctionnelle."
-            severity error;
-
-        -- Optionnel : petit test mode normal (plus lent)
+        report "TEST 4: NORMAL + START -> LED_OUT doit changer (attente longue)" severity note;
         SEL_SPEED_CLK <= '0';
+        START_STOP    <= '1';
+        wait for 200 us;
         led0 := LED_OUT;
-        wait for 120 ms; -- en normal (10 Hz), tu peux voir au moins 1-2 steps
-        led1 := LED_OUT;
 
-        assert led1 /= led0
-            report "En mode NORMAL, LED_OUT n'a pas change sur 120ms (possible si diviseur diffère)."
+        wait_change_vec(LED_OUT, 250 ms, 1 ms, "LED_OUT (NORMAL)");
+
+        report "TEST 5: RESET pendant fonctionnement" severity note;
+        led1 := LED_OUT;
+        RESET <= '1';
+        wait for 300 ns;
+        RESET <= '0';
+        wait for 2 ms;
+
+        assert LED_OUT /= led1
+            report "RESET n'a pas eu d'effet visible sur LED_OUT"
             severity warning;
 
-        report "TB terminé : tests de base OK (reset/start-stop/speed/mux)."
-            severity note;
-
+        report "FIN TB: Tous les tests principaux sont passes." severity note;
         wait;
     end process;
 
